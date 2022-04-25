@@ -1,0 +1,78 @@
+<mat-card class="example-card">
+    <mat-card-title>Working Experience</mat-card-title>
+    <mat-card-subtitle>Enter your working experiences to be display on resume.</mat-card-subtitle>
+    <mat-card-content>
+
+        <form [formGroup]="empform" (ngSubmit)="onSubmit()">
+            <div formArrayName="employees">
+                <div *ngFor="let employee of employees().controls; let empIndex=index">
+                    <div [formGroupName]="empIndex"
+                        style="border: 1px solid blue; padding: 10px; width: 600px; margin: 5px;">
+                        {{empIndex}} First Name :
+                        <input type="text" formControlName="firstName" />
+                        Last Name:
+                        <input type="text" formControlName="lastName" />
+
+                        <button (click)="removeEmployee(empIndex)">Remove</button>
+
+                        <div formArrayName="experience">
+                            <div
+                                *ngFor="let experience of employeeExperience(empIndex).controls; let experienceIndex=index">
+                                <div [formGroupName]="experienceIndex">
+                                    {{experienceIndex}} Experience :
+                                    <input type="text" formControlName="company" />
+                                    Exp:
+                                    <input type="text" formControlName="designation" />
+
+                                    <button (click)="removeEmployeeExperience(empIndex,experienceIndex)">
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" (click)="addEmployeeExperience(empIndex)">
+                            Add Exp
+                        </button>
+                    </div>
+                </div>
+                <button type="button" (click)="addEmployee()">Add Employee</button>
+            </div>
+        </form>
+
+        {{this.empform.value | json}}
+
+
+        <!-- <div [formGroup]="form">
+            <div>
+                <button (click)="addNewExperience()">Add</button>
+            </div>
+
+            <div *ngFor="let experienceGroup of experienceGroups.controls;let i=index" [formGroup]="experienceGroup">
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Company Name</mat-label>
+                            <input matInput formControlName="company">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Designation</mat-label>
+                            <input matInput formControlName="designation">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <button (click)="deleteExperienceGroup(i)">Delete - {{i}}</button>
+            </div>
+        </div>
+
+
+        <pre>
+            {{form.value | json}}
+        </pre> -->
+    </mat-card-content>
+</mat-card>
